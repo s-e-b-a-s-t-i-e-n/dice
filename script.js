@@ -1,4 +1,4 @@
-// Probabilités par défaut pour favoriser les chiffres élevés (pour dés à 6 faces)
+// Default probabilities favoring high numbers (for 6-sided dice)
 const DEFAULT_PROBABILITIES_6 = {
     1: 5,   // 5%
     2: 8,   // 8%
@@ -8,40 +8,40 @@ const DEFAULT_PROBABILITIES_6 = {
     6: 30   // 30%
 };
 
-// Fonction pour obtenir le nombre de faces actuel
+// Function to get current number of faces
 function getFaceCount() {
     return parseInt(document.getElementById('faceCount').value) || 6;
 }
 
-// Fonction pour générer des probabilités par défaut selon le nombre de faces
+// Function to generate default probabilities based on number of faces
 function generateDefaultProbabilities(faceCount) {
     const probabilities = {};
     
     if (faceCount === 6) {
-        // Utiliser les probabilités biaisées par défaut pour 6 faces
+        // Use default biased probabilities for 6 faces
         return { ...DEFAULT_PROBABILITIES_6 };
     } else {
-        // Pour les autres nombres de faces, créer un biais progressif
-        const totalWeight = faceCount * (faceCount + 1) / 2; // Somme de 1 à faceCount
+        // For other numbers of faces, create progressive bias
+        const totalWeight = faceCount * (faceCount + 1) / 2; // Sum from 1 to faceCount
         
         for (let face = 1; face <= faceCount; face++) {
-            // Plus la face est élevée, plus elle a de poids
+            // Higher faces have more weight
             const weight = face;
             probabilities[face] = Math.round((weight / totalWeight) * 100);
         }
         
-        // Ajuster pour que le total soit exactement 100%
+        // Adjust to total exactly 100%
         const currentTotal = Object.values(probabilities).reduce((sum, prob) => sum + prob, 0);
         const difference = 100 - currentTotal;
         
-        // Ajouter la différence à la face la plus élevée
+        // Add difference to highest face
         probabilities[faceCount] += difference;
         
         return probabilities;
     }
 }
 
-// Fonction pour obtenir les probabilités actuelles depuis l'interface
+// Function to get current probabilities from interface
 function getCurrentProbabilities() {
     const faceCount = getFaceCount();
     const probabilities = {};
@@ -53,14 +53,14 @@ function getCurrentProbabilities() {
     return probabilities;
 }
 
-// Fonction pour générer un dé biaisé avec les probabilités actuelles
+// Function to generate a biased die with current probabilities
 function rollBiasedDie() {
     const probabilities = getCurrentProbabilities();
     const faceCount = getFaceCount();
     const total = Object.values(probabilities).reduce((sum, prob) => sum + prob, 0);
     
     if (total === 0) {
-        // Si toutes les probabilités sont à 0, utiliser des probabilités équiprobables
+        // If all probabilities are 0, use equiprobable probabilities
         return Math.floor(Math.random() * faceCount) + 1;
     }
     
@@ -74,7 +74,7 @@ function rollBiasedDie() {
         }
     }
     
-    // Fallback (ne devrait jamais arriver)
+    // Fallback (should never happen)
     return faceCount;
 }
 
@@ -153,10 +153,10 @@ function displayDice(results) {
 function displayTotal(results) {
     const total = results.reduce((sum, value) => sum + value, 0);
     const totalElement = document.getElementById('total');
-    totalElement.innerHTML = `<strong>Total : ${total}</strong>`;
+    totalElement.innerHTML = `<strong>Total: ${total}</strong>`;
 }
 
-// Fonction pour ajouter à l'historique
+// Function to add to history
 function addToHistory(results, consistencyPercent = 0) {
     const historyElement = document.getElementById('history');
     const total = results.reduce((sum, value) => sum + value, 0);
@@ -166,7 +166,7 @@ function addToHistory(results, consistencyPercent = 0) {
     
     let consistencyText = '';
     if (consistencyPercent > 0) {
-        consistencyText = `<span class="consistency">Cohérence: ${consistencyPercent}%</span>`;
+        consistencyText = `<span class="consistency">Consistency: ${consistencyPercent}%</span>`;
     }
     
     historyItem.innerHTML = `
@@ -176,42 +176,42 @@ function addToHistory(results, consistencyPercent = 0) {
         <span class="timestamp">${new Date().toLocaleTimeString()}</span>
     `;
     
-    // Ajouter au début de l'historique
+    // Add to beginning of history
     historyElement.insertBefore(historyItem, historyElement.firstChild);
     
-    // Limiter l'historique à 10 éléments
+    // Limit history to 10 items
     while (historyElement.children.length > 10) {
         historyElement.removeChild(historyElement.lastChild);
     }
 }
 
-// Fonction principale de lancement
+// Main roll function
 function rollDiceHandler() {
     const diceCount = parseInt(document.getElementById('diceCount').value);
     const consistencyPercent = parseInt(document.getElementById('consistency').value);
     
     if (diceCount < 1 || diceCount > 10) {
-        alert('Veuillez choisir entre 1 et 10 dés');
+        alert('Please choose between 1 and 10 dice');
         return;
     }
     
-    // Désactiver le bouton pendant l'animation
+    // Disable button during animation
     const rollButton = document.getElementById('rollButton');
     rollButton.disabled = true;
-    rollButton.textContent = 'Lancement...';
+    rollButton.textContent = 'Rolling...';
     
-    // Lancer les dés avec cohérence
+    // Roll dice with consistency
     const results = rollDice(diceCount, consistencyPercent);
     
-    // Afficher les résultats
+    // Display results
     displayDice(results);
     displayTotal(results);
     addToHistory(results, consistencyPercent);
     
-    // Réactiver le bouton après l'animation
+    // Re-enable button after animation
     setTimeout(() => {
         rollButton.disabled = false;
-        rollButton.textContent = 'Lancer les dés';
+        rollButton.textContent = 'Roll Dice';
     }, 1000);
 }
 
@@ -318,49 +318,49 @@ function resetProbabilities() {
     updateProbabilityBars();
 }
 
-// Fonction pour normaliser les probabilités à 100%
+// Function to normalize probabilities to 100%
 function normalizeProbabilities() {
     const probabilities = getCurrentProbabilities();
     const faceCount = getFaceCount();
     const total = Object.values(probabilities).reduce((sum, prob) => sum + prob, 0);
     
     if (total === 0) {
-        alert('Impossible de normaliser : toutes les probabilités sont à 0');
+        alert('Cannot normalize: all probabilities are 0');
         return;
     }
     
-    // Calculer les probabilités normalisées avec précision
+    // Calculate normalized probabilities with precision
     const normalizedProbs = {};
     let allocatedTotal = 0;
     
-    // Première passe : arrondir vers le bas pour chaque probabilité
+    // First pass: round down for each probability
     for (let face = 1; face <= faceCount; face++) {
         const normalizedValue = Math.floor((probabilities[face] / total) * 100);
         normalizedProbs[face] = normalizedValue;
         allocatedTotal += normalizedValue;
     }
     
-    // Deuxième passe : distribuer le reste pour atteindre exactement 100%
+    // Second pass: distribute remainder to reach exactly 100%
     const remainder = 100 - allocatedTotal;
     
     if (remainder > 0) {
-        // Trouver les faces avec les plus grandes parties décimales
+        // Find faces with largest decimal parts
         const decimalParts = [];
         for (let face = 1; face <= faceCount; face++) {
             const decimalPart = ((probabilities[face] / total) * 100) - Math.floor((probabilities[face] / total) * 100);
             decimalParts.push({ face, decimalPart });
         }
         
-        // Trier par partie décimale décroissante
+        // Sort by decimal part descending
         decimalParts.sort((a, b) => b.decimalPart - a.decimalPart);
         
-        // Ajouter 1 aux faces avec les plus grandes parties décimales
+        // Add 1 to faces with largest decimal parts
         for (let i = 0; i < remainder && i < decimalParts.length; i++) {
             normalizedProbs[decimalParts[i].face]++;
         }
     }
     
-    // Appliquer les valeurs normalisées
+    // Apply normalized values
     for (let face = 1; face <= faceCount; face++) {
         const input = document.getElementById(`prob${face}`);
         if (input) {
@@ -371,18 +371,18 @@ function normalizeProbabilities() {
     updateProbabilityBars();
 }
 
-// Fonction pour valider les probabilités
+// Function to validate probabilities
 function validateProbabilities() {
     const probabilities = getCurrentProbabilities();
     const total = Object.values(probabilities).reduce((sum, prob) => sum + prob, 0);
     
     if (total === 0) {
-        alert('Attention : toutes les probabilités sont à 0. Les dés utiliseront des probabilités équiprobables.');
+        alert('Warning: all probabilities are 0. Dice will use equiprobable probabilities.');
         return false;
     }
     
     if (total !== 100) {
-        const response = confirm(`Le total des probabilités est de ${total}% au lieu de 100%. Voulez-vous normaliser automatiquement ?`);
+        const response = confirm(`Total probabilities is ${total}% instead of 100%. Do you want to normalize automatically?`);
         if (response) {
             normalizeProbabilities();
         }
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
     rollDiceHandler();
 });
 
-// Fonction pour tester les probabilités (optionnel)
+// Function to test probabilities (optional)
 function testProbabilities(iterations = 10000) {
     const counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
     
@@ -434,42 +434,42 @@ function testProbabilities(iterations = 10000) {
         counts[result]++;
     }
     
-    console.log('Test des probabilités sur', iterations, 'lancers :');
+    console.log('Probability test over', iterations, 'rolls:');
     for (let face = 1; face <= 6; face++) {
         const percentage = (counts[face] / iterations * 100).toFixed(2);
-        console.log(`Face ${face}: ${counts[face]} fois (${percentage}%)`);
+        console.log(`Face ${face}: ${counts[face]} times (${percentage}%)`);
     }
 }
 
-// Fonction pour tester la normalisation
+// Function to test normalization
 function testNormalization() {
-    console.log('Test de la normalisation des probabilités :');
+    console.log('Probability normalization test:');
     
-    // Test avec des valeurs qui donnent des problèmes d'arrondi
+    // Test with values that cause rounding problems
     const testCases = [
-        { name: 'Cas 1: 33, 33, 33', values: [33, 33, 33] },
-        { name: 'Cas 2: 16.67, 16.67, 16.67, 16.67, 16.67, 16.66', values: [16.67, 16.67, 16.67, 16.67, 16.67, 16.66] },
-        { name: 'Cas 3: 10, 20, 30, 40', values: [10, 20, 30, 40] },
-        { name: 'Cas 4: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        { name: 'Case 1: 33, 33, 33', values: [33, 33, 33] },
+        { name: 'Case 2: 16.67, 16.67, 16.67, 16.67, 16.67, 16.66', values: [16.67, 16.67, 16.67, 16.67, 16.67, 16.66] },
+        { name: 'Case 3: 10, 20, 30, 40', values: [10, 20, 30, 40] },
+        { name: 'Case 4: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
     ];
     
     testCases.forEach((testCase, index) => {
         console.log(`\n${testCase.name}:`);
         const originalTotal = testCase.values.reduce((sum, val) => sum + val, 0);
-        console.log(`Total original: ${originalTotal}`);
+        console.log(`Original total: ${originalTotal}`);
         
-        // Simuler la normalisation
+        // Simulate normalization
         const normalizedProbs = {};
         let allocatedTotal = 0;
         
-        // Première passe : arrondir vers le bas
+        // First pass: round down
         testCase.values.forEach((value, face) => {
             const normalizedValue = Math.floor((value / originalTotal) * 100);
             normalizedProbs[face + 1] = normalizedValue;
             allocatedTotal += normalizedValue;
         });
         
-        // Deuxième passe : distribuer le reste
+        // Second pass: distribute remainder
         const remainder = 100 - allocatedTotal;
         if (remainder > 0) {
             const decimalParts = [];
@@ -486,15 +486,15 @@ function testNormalization() {
         }
         
         const finalTotal = Object.values(normalizedProbs).reduce((sum, val) => sum + val, 0);
-        console.log(`Total normalisé: ${finalTotal}`);
-        console.log(`Valeurs: [${Object.values(normalizedProbs).join(', ')}]`);
-        console.log(`✓ ${finalTotal === 100 ? 'SUCCÈS' : 'ÉCHEC'}`);
+        console.log(`Normalized total: ${finalTotal}`);
+        console.log(`Values: [${Object.values(normalizedProbs).join(', ')}]`);
+        console.log(`✓ ${finalTotal === 100 ? 'SUCCESS' : 'FAILURE'}`);
     });
 }
 
-// Fonction pour tester la cohérence
+// Function to test consistency
 function testConsistency(consistencyPercent = 100, diceCount = 5, iterations = 100) {
-    console.log(`Test de cohérence à ${consistencyPercent}% avec ${diceCount} dés sur ${iterations} lancers :`);
+    console.log(`Consistency test at ${consistencyPercent}% with ${diceCount} dice over ${iterations} rolls:`);
     
     let identicalCount = 0;
     let similarCount = 0;
@@ -502,23 +502,23 @@ function testConsistency(consistencyPercent = 100, diceCount = 5, iterations = 1
     for (let i = 0; i < iterations; i++) {
         const results = rollDice(diceCount, consistencyPercent);
         
-        // Vérifier si tous les dés sont identiques
+        // Check if all dice are identical
         const allIdentical = results.every(value => value === results[0]);
         if (allIdentical) {
             identicalCount++;
         }
         
-        // Vérifier si tous les dés sont similaires (différence max de 1)
+        // Check if all dice are similar (max difference of 1)
         const maxDiff = Math.max(...results) - Math.min(...results);
         if (maxDiff <= 1) {
             similarCount++;
         }
         
-        if (i < 10) { // Afficher les 10 premiers résultats
-            console.log(`Lancer ${i + 1}: [${results.join(', ')}] - Identiques: ${allIdentical}`);
+        if (i < 10) { // Show first 10 results
+            console.log(`Roll ${i + 1}: [${results.join(', ')}] - Identical: ${allIdentical}`);
         }
     }
     
-    console.log(`Résultats identiques: ${identicalCount}/${iterations} (${(identicalCount/iterations*100).toFixed(1)}%)`);
-    console.log(`Résultats similaires: ${similarCount}/${iterations} (${(similarCount/iterations*100).toFixed(1)}%)`);
+    console.log(`Identical results: ${identicalCount}/${iterations} (${(identicalCount/iterations*100).toFixed(1)}%)`);
+    console.log(`Similar results: ${similarCount}/${iterations} (${(similarCount/iterations*100).toFixed(1)}%)`);
 }

@@ -1,111 +1,111 @@
-# 🎲 Lanceur de Dés Biaisés
+# 🎲 Dice Roller
 
-Une application web interactive qui permet de lancer des dés avec une probabilité biaisée favorisant les chiffres élevés.
+An interactive web application that allows you to roll dice with biased probabilities favoring high numbers.
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-- **Sélection du nombre de dés** : Choisissez entre 1 et 10 dés à lancer
-- **Nombre de faces personnalisable** : Définissez le nombre de faces par dé (2 à 20 faces, 6 par défaut)
-- **Probabilités personnalisables** : Définissez les probabilités de chaque face directement depuis l'interface
-- **Probabilités biaisées par défaut** : Configuration initiale favorisant les chiffres élevés :
-  - Face 1 : 5%
-  - Face 2 : 8%
-  - Face 3 : 12%
-  - Face 4 : 20%
-  - Face 5 : 25%
-  - Face 6 : 30%
-- **Cohérence des dés** : Contrôlez le pourcentage de chance que les dés montrent des valeurs similaires (0% à 100%)
-- **Interface moderne** : Design responsive et animations fluides
-- **Historique des lancers** : Consultez les 10 derniers lancers avec horodatage et niveau de cohérence
-- **Animations** : Effet de rotation lors du lancement des dés
-- **Validation intelligente** : Normalisation automatique des probabilités et alertes de validation
+- **Number of dice selection**: Choose between 1 and 10 dice to roll
+- **Customizable number of faces**: Define the number of faces per die (2 to 20 faces, 6 by default)
+- **Customizable probabilities**: Define the probability of each face directly from the interface
+- **Default biased probabilities**: Initial configuration favoring high numbers:
+  - Face 1: 5%
+  - Face 2: 8%
+  - Face 3: 12%
+  - Face 4: 20%
+  - Face 5: 25%
+  - Face 6: 30%
+- **Dice consistency**: Control the percentage chance that dice show similar values (0% to 100%)
+- **Modern interface**: Responsive design and smooth animations
+- **Roll history**: View the last 10 rolls with timestamp and consistency level
+- **Animations**: Rotation effect when rolling dice
+- **Smart validation**: Automatic probability normalization and validation alerts
 
-## 🎯 Comment utiliser
+## 🎯 How to use
 
-1. Ouvrez le fichier `index.html` dans votre navigateur web
-2. Sélectionnez le nombre de dés souhaité (1 à 10)
-3. Ajustez le niveau de cohérence avec le slider (0% = dés indépendants, 100% = dés identiques)
-4. Cliquez sur "Lancer les dés" ou appuyez sur Entrée
-5. Observez les résultats avec le total et l'historique
+1. Open the `index.html` file in your web browser
+2. Select the desired number of dice (1 to 10)
+3. Adjust the consistency level with the slider (0% = independent dice, 100% = identical dice)
+4. Click "Roll Dice" or press Enter
+5. Observe the results with total and history
 
-### 🎲 Cohérence des dés
+### 🎲 Dice consistency
 
-La fonctionnalité de cohérence permet de contrôler la similarité entre les dés lors d'un même lancement :
+The consistency feature allows you to control the similarity between dice in the same roll:
 
-- **0%** : Chaque dé est lancé indépendamment avec les probabilités biaisées
-- **50%** : Les dés ont 50% de chance de montrer des valeurs similaires au premier dé
-- **100%** : Tous les dés montrent la même valeur (ou des valeurs très proches)
+- **0%**: Each die is rolled independently with biased probabilities
+- **50%**: Dice have a 50% chance of showing values similar to the first die
+- **100%**: All dice show the same value (or very close values)
 
-Cette fonctionnalité est utile pour créer des effets dramatiques ou des situations où les dés "s'accordent" entre eux.
+This feature is useful for creating dramatic effects or situations where dice "agree" with each other.
 
-### 🎯 Nombre de faces personnalisable
+### 🎯 Customizable number of faces
 
-L'application permet de définir le nombre de faces par dé :
+The application allows you to define the number of faces per die:
 
-- **Plage de valeurs** : 2 à 20 faces par dé
-- **Valeur par défaut** : 6 faces (dé classique)
-- **Génération automatique** : Les contrôles de probabilité se mettent à jour automatiquement
-- **Probabilités intelligentes** : Pour les dés non-6 faces, génération automatique d'un biais progressif
-- **Affichage adaptatif** : Les dés s'ajustent visuellement selon la valeur affichée
+- **Value range**: 2 to 20 faces per die
+- **Default value**: 6 faces (classic die)
+- **Automatic generation**: Probability controls update automatically
+- **Smart probabilities**: For non-6 face dice, automatic generation of progressive bias
+- **Adaptive display**: Dice adjust visually according to the displayed value
 
-#### Exemples d'utilisation :
-- **Dé à 2 faces** : Pile ou face (1 ou 2)
-- **Dé à 4 faces** : Tétraèdre classique
-- **Dé à 8 faces** : Octaèdre
-- **Dé à 10 faces** : Pour les jeux de rôle
-- **Dé à 12 faces** : Dodécaèdre
-- **Dé à 20 faces** : Icosaèdre (D20 classique)
+#### Usage examples:
+- **2-sided die**: Heads or tails (1 or 2)
+- **4-sided die**: Classic tetrahedron
+- **8-sided die**: Octahedron
+- **10-sided die**: For role-playing games
+- **12-sided die**: Dodecahedron
+- **20-sided die**: Icosahedron (classic D20)
 
-### 🎯 Probabilités personnalisées
+### 🎯 Custom probabilities
 
-L'application permet de définir vos propres probabilités pour chaque face du dé :
+The application allows you to define your own probabilities for each die face:
 
-- **Modification en temps réel** : Changez les valeurs et voyez les barres se mettre à jour instantanément
-- **Validation automatique** : Le total est affiché en couleur (vert=100%, rouge>100%, orange<100%)
-- **Bouton "Réinitialiser"** : Remet les probabilités par défaut
-- **Bouton "Normaliser"** : Ajuste automatiquement les valeurs pour totaliser 100%
-- **Gestion des erreurs** : Alertes si toutes les probabilités sont à 0 ou si le total n'est pas 100%
+- **Real-time modification**: Change values and see bars update instantly
+- **Automatic validation**: Total is displayed in color (green=100%, red>100%, orange<100%)
+- **"Reset" button**: Restores default probabilities
+- **"Normalize" button**: Automatically adjusts values to total 100%
+- **Error handling**: Alerts if all probabilities are 0 or if total is not 100%
 
-#### Exemples de configurations :
-- **Dés équiprobables** : 16.67% pour chaque face
-- **Dés favorisant les faibles** : 30%, 25%, 20%, 12%, 8%, 5%
-- **Dés extrêmes** : 50% pour 1 et 6, 0% pour les autres
+#### Configuration examples:
+- **Equiprobable dice**: 16.67% for each face
+- **Low-favoring dice**: 30%, 25%, 20%, 12%, 8%, 5%
+- **Extreme dice**: 50% for 1 and 6, 0% for others
 
-## 🛠️ Technologies utilisées
+## 🛠️ Technologies used
 
-- **HTML5** : Structure de la page
-- **CSS3** : Styles et animations
-- **JavaScript** : Logique des dés biaisés et interactions
+- **HTML5**: Page structure
+- **CSS3**: Styles and animations
+- **JavaScript**: Biased dice logic and interactions
 
-## 📁 Structure du projet
+## 📁 Project structure
 
 ```
 dice/
-├── index.html      # Page principale
-├── script.js       # Logique JavaScript
-├── style.css       # Styles CSS
+├── index.html      # Main page
+├── script.js       # JavaScript logic
+├── style.css       # CSS styles
 └── README.md       # Documentation
 ```
 
-## 🎲 Algorithme des dés biaisés
+## 🎲 Biased dice algorithm
 
-L'application utilise un algorithme de probabilité cumulative pour générer des résultats biaisés :
+The application uses a cumulative probability algorithm to generate biased results:
 
-1. Un nombre aléatoire entre 0 et 1 est généré
-2. Les probabilités cumulatives sont calculées
-3. Le premier chiffre dont la probabilité cumulative dépasse le nombre aléatoire est retourné
+1. A random number between 0 and 1 is generated
+2. Cumulative probabilities are calculated
+3. The first number whose cumulative probability exceeds the random number is returned
 
-Cette méthode garantit que les chiffres élevés ont effectivement plus de chances d'apparaître.
+This method ensures that high numbers actually have more chances of appearing.
 
-## 🧪 Test des probabilités
+## 🧪 Probability testing
 
-Pour tester les probabilités en console, utilisez :
+To test probabilities in console, use:
 ```javascript
-testProbabilities(10000); // Teste sur 10 000 lancers
+testProbabilities(10000); // Test over 10,000 rolls
 ```
 
-## 📱 Compatibilité
+## 📱 Compatibility
 
-- Compatible avec tous les navigateurs modernes
-- Interface responsive pour mobile et desktop
-- Fonctionne sans connexion internet
+- Compatible with all modern browsers
+- Responsive interface for mobile and desktop
+- Works without internet connection
