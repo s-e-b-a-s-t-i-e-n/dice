@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanceur de Dés Biaisés</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎲 Lanceur de Dés Biaisés</h1>
+            <p>Les dés sont biaisés pour favoriser les chiffres élevés !</p>
+        </header>
+
+        <!-- Résultats des dés -->
+        <div class="dice-results">
+            <h2>Résultats</h2>
+            <div id="diceContainer" class="dice-container"></div>
+        </div>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="diceCount">Nombre de dés :</label>
+                <input type="number" id="diceCount" min="1" max="10" value="2">
+                <button id="rollButton">Lancer les dés</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="faceCount">Nombre de faces par dé :</label>
+                <input type="number" id="faceCount" min="2" max="20" value="6" step="1">
+                <span class="face-info">faces</span>
+            </div>
+            
+            <div class="input-group">
+                <label for="consistency">Cohérence des dés :</label>
+                <input type="range" id="consistency" min="0" max="100" value="80" step="5">
+                <span id="consistencyValue">80%</span>
+                <div class="consistency-info">
+                    <small>Plus le pourcentage est élevé, plus les dés ont tendance à montrer des valeurs similaires</small>
+                </div>
+            </div>
+            
+            <div class="bias-info">
+                <h3>Probabilités personnalisées :</h3>
+                <div id="probabilityControls" class="probability-controls">
+                    <!-- Les contrôles de probabilité seront générés dynamiquement -->
+                </div>
+                <div class="probability-summary">
+                    <div class="total-prob">
+                        <span>Total : </span>
+                        <span id="totalProb">100</span>
+                        <span>%</span>
+                    </div>
+                    <div class="prob-actions">
+                        <button id="resetProb">Réinitialiser</button>
+                        <button id="normalizeProb">Normaliser</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results">
+            <div id="total" class="total"></div>
+            <div id="history" class="history"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
